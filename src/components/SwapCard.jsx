@@ -57,6 +57,7 @@ export default function SwapCard() {
   const [approvalHash, setApprovalHash] = useState(null);
   const [swapHash, setSwapHash] = useState(null);
   const [txError, setTxError] = useState(null);
+  const [txCount, setTxCount] = useState(0);
 
   useEffect(() => {
     if (walletChainId) setChainId(walletChainId);
@@ -153,7 +154,7 @@ export default function SwapCard() {
     return () => {
       cancelled = true;
     };
-  }, [address, chainId, fromToken, toToken]);
+  }, [address, chainId, fromToken, toToken, txCount]);
 
   useEffect(() => {
     let cancelled = false;
@@ -179,7 +180,7 @@ export default function SwapCard() {
     return () => {
       cancelled = true;
     };
-  }, [address, chainId, fromToken]);
+  }, [address, chainId, fromToken, txCount]);
 
   useEffect(() => {
     let cancelled = false;
@@ -298,6 +299,7 @@ export default function SwapCard() {
       setSwapHash(hash);
       await waitForTransactionReceipt(config, { hash });
       setStep('success');
+      setTxCount((count) => count + 1);
     } catch (error) {
       setStep('error');
       setTxError(getErrorMessage(error));
@@ -369,7 +371,7 @@ export default function SwapCard() {
             value={amount}
             onChange={(event) => setAmount(event.target.value)}
           />
-          <TokenSelect chainId={chainId} value={fromSymbol} onChange={handleFromChange} />
+          <TokenSelect chainId={chainId} value={fromSymbol} onChange={handleFromChange} refreshKey={txCount} />
         </div>
         <div className="token-meta">
           {address && balanceIn != null && fromToken ? (
@@ -399,7 +401,7 @@ export default function SwapCard() {
         <label>You receive</label>
         <div className="token-input-line">
           <input type="text" readOnly placeholder="0.0" value={outputText ?? ''} />
-          <TokenSelect chainId={chainId} value={toSymbol} onChange={handleToChange} />
+          <TokenSelect chainId={chainId} value={toSymbol} onChange={handleToChange} refreshKey={txCount} />
         </div>
         <div className="token-meta">
           {address && balanceOut != null && toToken ? (
