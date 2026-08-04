@@ -4,7 +4,7 @@ import { base, arbitrum } from 'wagmi/chains';
 import { connectorsForWallets } from '@rainbow-me/rainbowkit';
 import { metaMaskWallet, coinbaseWallet, injectedWallet } from '@rainbow-me/rainbowkit/wallets';
 
-const projectId = 'nityaexchange-porto';
+const projectId = '1e09f811b3be47d44b5e75c43caeae60';
 
 export const chains = [base, arbitrum];
 
