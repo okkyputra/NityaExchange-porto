@@ -120,3 +120,21 @@ export function formatTokenAmount(value, decimals, maxDigits = 6) {
 
   return frac ? `${wholeStr}.${frac}` : wholeStr;
 }
+
+export function formatRate(amountOut, decimalsOut, amountIn, decimalsIn) {
+  const numerator = amountOut * 10n ** BigInt(decimalsIn);
+  const denominator = amountIn * 10n ** BigInt(decimalsOut);
+  if (denominator === 0n) return '0';
+
+  const SCALE = 18n;
+  const scaled = (numerator * 10n ** SCALE) / denominator;
+  const str = scaled.toString().padStart(Number(SCALE) + 1, '0');
+  const whole = str.slice(0, -Number(SCALE)) || '0';
+  let frac = str.slice(-Number(SCALE)).replace(/0+$/, '');
+
+  if (whole !== '0' && frac.length > 6) frac = frac.slice(0, 6);
+  else if (whole === '0' && frac.length > 10) frac = frac.slice(0, 10);
+
+  const grouped = Number(whole).toLocaleString('en-US');
+  return frac ? `${grouped}.${frac}` : grouped;
+}

@@ -15,6 +15,7 @@ import { CHAIN_TOKENS, DEFAULT_PAIR } from '../tokens';
 import {
   applySlippage,
   deadlineFromNow,
+  formatRate,
   formatTokenAmount,
   getBestQuote,
   isNative,
@@ -243,6 +244,11 @@ export default function SwapCard() {
       ? formatTokenAmount(applySlippage(quoteOut, slippageBps), toToken.decimals)
       : null;
 
+  const priceText =
+    quoteOut && amountIn && fromToken && toToken
+      ? `1 ${fromToken.symbol} = ${formatRate(quoteOut, toToken.decimals, amountIn, fromToken.decimals)} ${toToken.symbol}`
+      : null;
+
   const routeInfo = route
     ? `${route.hops === 1 ? 'Direct pool' : 'Via WETH'} · ${route.fees.map((f) => `${f / 10000}%`).join(' → ')}`
     : '—';
@@ -418,6 +424,10 @@ export default function SwapCard() {
         <div className="quote-row">
           <span>Route</span>
           <span>{routeInfo}</span>
+        </div>
+        <div className="quote-row">
+          <span>Price</span>
+          <strong>{priceText ?? '—'}</strong>
         </div>
         <div className="quote-row">
           <span>Expected output</span>
