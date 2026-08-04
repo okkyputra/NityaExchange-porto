@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web3 Portfolio | Swap Starter</title>
+    <meta
+      name="description"
+      content="A modern Web3 portfolio landing page featuring a wallet-connected swap experience as the first app."
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="#hero">NovaSwap</a>
+      <nav class="nav-links">
+        <a href="#about">About</a>
+        <a href="#swap">Swap Demo</a>
+        <a href="#roadmap">Roadmap</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero" id="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Web3 portfolio • first experience: swaps</p>
+          <h1>Building a cleaner, faster on-chain experience for everyday traders.</h1>
+          <p class="lead">
+            This portfolio now shows a real wallet-connected swap flow, powered by a live DEX quote from the 0x API.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#swap">Explore swap demo</a>
+            <button class="btn btn-secondary" id="connectWallet" type="button">Connect wallet</button>
+          </div>
+          <ul class="hero-pills">
+            <li>MetaMask-ready</li>
+            <li>Live quotes</li>
+            <li>On-chain execution</li>
+          </ul>
+        </div>
+
+        <div class="hero-panel">
+          <div class="metric-card">
+            <span>TVL focus</span>
+            <strong>$4.8M</strong>
+          </div>
+          <div class="metric-card">
+            <span>Route quality</span>
+            <strong>97.2%</strong>
+          </div>
+          <div class="metric-card">
+            <span>Launch milestone</span>
+            <strong>Q4 2026</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="about">
+        <h2>What this portfolio is about</h2>
+        <div class="card-grid">
+          <article class="info-card">
+            <h3>Design-first</h3>
+            <p>Clear flows, quick decisions, and a calm interface for users stepping into DeFi.</p>
+          </article>
+          <article class="info-card">
+            <h3>Core product</h3>
+            <p>The first app is a swap experience that feels approachable and production-ready.</p>
+          </article>
+          <article class="info-card">
+            <h3>Growth path</h3>
+            <p>From swaps to portfolio tracking, bridges, and wallet-native tooling.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="swap">
+        <div class="swap-shell">
+          <div class="swap-copy">
+            <p class="eyebrow">Interactive showcase</p>
+            <h2>Wallet-connected swap UI</h2>
+            <p>
+              Connect MetaMask, choose your pair, and fetch a live quote from the 0x API before executing the swap.
+            </p>
+          </div>
+
+          <form class="swap-card" id="swapForm">
+            <div class="swap-row">
+              <label for="fromToken">From</label>
+              <select id="fromToken" name="fromToken"></select>
+            </div>
+
+            <div class="swap-row">
+              <label for="amount">Amount</label>
+              <input id="amount" name="amount" type="number" min="0" step="0.01" value="120" />
+            </div>
+
+            <div class="swap-row">
+              <label for="toToken">To</label>
+              <select id="toToken" name="toToken"></select>
+            </div>
+
+            <div class="quote-box" id="quoteBox">
+              <p>Estimated output</p>
+              <strong id="quoteValue">0.00</strong>
+              <span id="quoteMeta">Connect wallet and fetch a live quote.</span>
+              <span id="quoteDetails">No quote yet.</span>
+            </div>
+
+            <div class="button-row">
+              <button class="btn btn-primary full-width" type="submit">Get live quote</button>
+              <button class="btn btn-secondary full-width" id="executeSwap" type="button">Swap now</button>
+            </div>
+            <p class="wallet-status" id="walletStatus">Wallet not connected</p>
+            <p class="status" id="status">Connect your wallet to fetch a live 0x quote.</p>
+          </form>
+        </div>
+      </section>
+
+      <section class="section" id="roadmap">
+        <h2>Roadmap</h2>
+        <ol class="roadmap-list">
+          <li><strong>Phase 1</strong> — Launch a polished swap demo with wallet connection and live quotes.</li>
+          <li><strong>Phase 2</strong> — Add balances, charts, and transaction history.</li>
+          <li><strong>Phase 3</strong> — Expand into portfolio tracking and cross-chain swaps.</li>
+        </ol>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p>NovaSwap • Web3 portfolio starter</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/ethers@6.13.1/dist/ethers.umd.min.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>

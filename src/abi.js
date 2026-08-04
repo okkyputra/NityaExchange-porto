@@ -1,0 +1,116 @@
+export const erc20Abi = [
+  {
+    inputs: [
+      { internalType: 'address', name: 'owner', type: 'address' },
+      { internalType: 'address', name: 'spender', type: 'address' },
+    ],
+    name: 'allowance',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'spender', type: 'address' },
+      { internalType: 'uint256', name: 'amount', type: 'uint256' },
+    ],
+    name: 'approve',
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'balanceOf',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'decimals',
+    outputs: [{ internalType: 'uint8', name: '', type: 'uint8' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+];
+
+export const factoryAbi = [
+  {
+    inputs: [
+      { internalType: 'address', name: 'tokenA', type: 'address' },
+      { internalType: 'address', name: 'tokenB', type: 'address' },
+      { internalType: 'uint24', name: 'fee', type: 'uint24' },
+    ],
+    name: 'getPool',
+    outputs: [{ internalType: 'address', name: 'pool', type: 'address' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+];
+
+export const quoterV2Abi = [
+  {
+    inputs: [
+      { internalType: 'bytes', name: 'path', type: 'bytes' },
+      { internalType: 'uint256', name: 'amountIn', type: 'uint256' },
+    ],
+    name: 'quoteExactInput',
+    outputs: [
+      { internalType: 'uint256', name: 'amountOut', type: 'uint256' },
+      { internalType: 'uint160', name: 'sqrtPriceX96After', type: 'uint160' },
+      { internalType: 'uint32', name: 'initializedTicksCrossed', type: 'uint32' },
+      { internalType: 'uint256', name: 'gasEstimate', type: 'uint256' },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+];
+
+export const swapRouterAbi = [
+  {
+    inputs: [
+      {
+        components: [
+          { internalType: 'bytes', name: 'path', type: 'bytes' },
+          { internalType: 'address', name: 'recipient', type: 'address' },
+          { internalType: 'uint256', name: 'deadline', type: 'uint256' },
+          { internalType: 'uint256', name: 'amountIn', type: 'uint256' },
+          { internalType: 'uint256', name: 'amountOutMinimum', type: 'uint256' },
+        ],
+        internalType: 'struct IV3SwapRouter.ExactInputParams',
+        name: 'params',
+        type: 'tuple',
+      },
+    ],
+    name: 'exactInput',
+    outputs: [{ internalType: 'uint256', name: 'amountOut', type: 'uint256' }],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'uint256', name: 'amountOutMin', type: 'uint256' },
+      { internalType: 'address[]', name: 'path', type: 'address[]' },
+      { internalType: 'address', name: 'to', type: 'address' },
+      { internalType: 'uint256', name: 'deadline', type: 'uint256' },
+    ],
+    name: 'swapExactETHForTokens',
+    outputs: [{ internalType: 'uint256[]', name: 'amounts', type: 'uint256[]' }],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'uint256', name: 'amountIn', type: 'uint256' },
+      { internalType: 'uint256', name: 'amountOutMin', type: 'uint256' },
+      { internalType: 'address[]', name: 'path', type: 'address[]' },
+      { internalType: 'address', name: 'to', type: 'address' },
+      { internalType: 'uint256', name: 'deadline', type: 'uint256' },
+    ],
+    name: 'swapExactTokensForETH',
+    outputs: [{ internalType: 'uint256[]', name: 'amounts', type: 'uint256[]' }],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+];
