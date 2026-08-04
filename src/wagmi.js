@@ -4,7 +4,7 @@ import { base, arbitrum } from 'wagmi/chains';
 import { connectorsForWallets } from '@rainbow-me/rainbowkit';
 import { metaMaskWallet, coinbaseWallet, injectedWallet } from '@rainbow-me/rainbowkit/wallets';
 
-const projectId = 'novaswap-portfolio';
+const projectId = 'nityaexchange-porto';
 
 export const chains = [base, arbitrum];
 
@@ -42,7 +42,7 @@ const connectors = connectorsForWallets(
       wallets: [metaMaskWallet, coinbaseWallet, injectedWallet],
     },
   ],
-  { appName: 'NovaSwap', projectId },
+  { appName: 'NityaExchange', projectId },
 );
 
 export const config = createConfig({

@@ -1,16 +1,28 @@
-# React + Vite
+# NityaExchange · Web3 Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A Web3 portfolio whose first app is a live, on-chain token swap. Built with React + Vite + wagmi + RainbowKit and powered by Uniswap V3 routing on Base and Arbitrum.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Live on-chain quotes via Uniswap V3 QuoterV2
+- Swap execution through the Uniswap V3 SwapRouter
+- Multi-network support: Base and Arbitrum
+- Wallet connect via RainbowKit (MetaMask, Coinbase Wallet, injected)
+- Allowance management and slippage controls
+- Best-quote routing across multiple fee tiers and WETH hop candidates
 
-## React Compiler
+## Getting started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm install
+npm run dev
+```
 
-## Expanding the Oxlint configuration
+Open http://localhost:5173, connect a wallet, and try a swap on Base or Arbitrum mainnet.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## Scripts
+
+- `npm run dev` — start the dev server
+- `npm run build` — production build
+- `npm run lint` — run oxlint
+- `npm run preview` — preview the production build

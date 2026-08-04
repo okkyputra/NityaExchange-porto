@@ -6,7 +6,7 @@ export default function App() {
     <>
       <header className="topbar">
         <a className="brand" href="#hero">
-          NovaSwap
+          NityaExchange
         </a>
         <nav className="nav-links">
           <a href="#about">About</a>
@@ -117,7 +117,7 @@ export default function App() {
       </main>
 
       <footer className="footer">
-        <p>NovaSwap · Web3 portfolio · React + Vite + wagmi + Uniswap V3</p>
+        <p>NityaExchange · Web3 portfolio · React + Vite + wagmi + Uniswap V3</p>
       </footer>
     </>
   );
