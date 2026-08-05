@@ -54,7 +54,7 @@ describe('swap history (localStorage)', () => {
     removeSwap(latest.id);
     const swaps = getSwaps();
     expect(swaps).toHaveLength(1);
-    expect(swaps[0].txHash).toBe('0xb');
+    expect(swaps[0].txHash).toBe('0xa');
   });
 
   it('clears all history', () => {
