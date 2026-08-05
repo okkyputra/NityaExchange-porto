@@ -6,7 +6,7 @@ A Web3 portfolio built around a production-style swap app. Live on-chain swaps o
 
 ### Phase 1 — Live swap app
 
-- Wallet connect via RainbowKit (WalletConnect, MetaMask, Coinbase, injected)
+- Wallet connect via RainbowKit (MetaMask, Coinbase Wallet, Rabby, injected)
 - Best-quote routing across fee tiers (0.01%–1%) and direct / via-WETH hop candidates
 - Live on-chain quotes from the deployed Uniswap V3 QuoterV2
 - Swap execution through the deployed V3 SwapRouter (`exactInput` + `multicall` + `unwrapWETH9`)
@@ -42,10 +42,6 @@ npm run dev
 Open http://localhost:5173, connect a wallet, and try a swap or a cross-chain route on Base / Arbitrum mainnet.
 
 **Live demo:** https://okkyputra.github.io/NityaExchange-porto/
-
-> Note: WalletConnect's QR modal only works on allowed origins (localhost by default). To enable it on
-> the GitHub Pages domain, add `https://okkyputra.github.io` to the project's domain allowlist on
-> [cloud.reown.com](https://cloud.reown.com). MetaMask / Coinbase / injected wallets work on any origin.
 
 ## Scripts
 
