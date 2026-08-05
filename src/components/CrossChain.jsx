@@ -242,14 +242,6 @@ export default function CrossChain() {
   const busy =
     execStep === 'swapping' || execStep === 'approving-bridge' || execStep === 'depositing';
 
-  if (!isConnected || !address) {
-    return (
-      <div className="panel-card">
-        <p className="panel-empty">Connect a wallet to route swaps across chains.</p>
-      </div>
-    );
-  }
-
   return (
     <div className="panel-card">
       <div className="panel-header">
