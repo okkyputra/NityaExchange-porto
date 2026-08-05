@@ -27,6 +27,8 @@ export default function CrossChain() {
   const [execStep, setExecStep] = useState('idle');
   const [execError, setExecError] = useState(null);
   const [bridgeDone, setBridgeDone] = useState(false);
+  const [bridgeLanded, setBridgeLanded] = useState(false);
+  const [bridgeLandedAmount, setBridgeLandedAmount] = useState(null);
   const [hashes, setHashes] = useState([]);
 
   const publicClientFrom = usePublicClient({ chainId: fromChainId });
@@ -49,10 +51,55 @@ export default function CrossChain() {
     setToSymbol(toChainId === 8453 ? 'USDC' : 'USDC');
     setRoute(null);
     setBridgeDone(false);
+    setBridgeLanded(false);
+    setBridgeLandedAmount(null);
     setHashes([]);
     setExecStep('idle');
     setExecError(null);
   }, [fromChainId, toChainId]);
+
+  useEffect(() => {
+    if (!bridgeDone || !route || !address || !publicClientTo) return;
+    let baseline = 0n;
+    let stopped = false;
+    let timer;
+    const check = async () => {
+      try {
+        const balance = await publicClientTo.readContract({
+          address: route.bridgeAsset.to.address,
+          abi: erc20Abi,
+          functionName: 'balanceOf',
+          args: [address],
+        });
+        if (balance > baseline) {
+          setBridgeLanded(true);
+          setBridgeLandedAmount(balance - baseline);
+          return;
+        }
+      } catch {
+        /* ignore transient read errors */
+      }
+      if (!stopped) timer = setTimeout(check, 12000);
+    };
+    publicClientTo
+      .readContract({
+        address: route.bridgeAsset.to.address,
+        abi: erc20Abi,
+        functionName: 'balanceOf',
+        args: [address],
+      })
+      .then((b) => {
+        baseline = b;
+        if (!stopped) check();
+      })
+      .catch(() => {
+        if (!stopped) check();
+      });
+    return () => {
+      stopped = true;
+      clearTimeout(timer);
+    };
+  }, [bridgeDone, route, address, publicClientTo]);
 
   useEffect(() => {
     let cancelled = false;
@@ -216,7 +263,7 @@ export default function CrossChain() {
             {
               path: route.legOut.feePath,
               recipient: address,
-              amountIn: route.bridgeOut,
+              amountIn: bridgeLandedAmount ?? route.bridgeOut,
               amountOutMinimum: applySlippage(route.legOut.output, 100),
             },
           ],
