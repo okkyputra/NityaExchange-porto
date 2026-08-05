@@ -3,9 +3,9 @@ import { fallback } from 'viem';
 import { base, arbitrum } from 'wagmi/chains';
 import { connectorsForWallets } from '@rainbow-me/rainbowkit';
 import {
-  walletConnectWallet,
   metaMaskWallet,
   coinbaseWallet,
+  rabbyWallet,
   injectedWallet,
 } from '@rainbow-me/rainbowkit/wallets';
 
@@ -44,7 +44,7 @@ const connectors = connectorsForWallets(
   [
     {
       groupName: 'Recommended',
-      wallets: [walletConnectWallet, metaMaskWallet, coinbaseWallet, injectedWallet],
+      wallets: [metaMaskWallet, coinbaseWallet, rabbyWallet, injectedWallet],
     },
   ],
   { appName: 'NityaExchange', projectId },
