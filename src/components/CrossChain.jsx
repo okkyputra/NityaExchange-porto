@@ -7,7 +7,6 @@ import { erc20Abi, swapRouterAbi, spokePoolAbi } from '../abi';
 import { CHAIN_TOKENS } from '../tokens';
 import { applySlippage, deadlineFromNow, formatTokenAmount, isNative } from '../lib/swap';
 import { planCrossChain, freshBridgeQuote, findToken } from '../lib/crosschain';
-import { formatUsd, formatPercent } from '../lib/price';
 
 function getErrorText(error) {
   return error?.shortMessage || error?.message || 'Transaction failed';
