@@ -125,7 +125,7 @@ describe('getBestQuote', () => {
           return '0x00000000000000000000000000000000000000AA';
         }
         if (functionName === 'quoteExactInput') {
-          return [ONE_ETH * quoteMultiplier];
+          return [ONE_ETH * quoteMultiplier, [], [], 100000n];
         }
         return null;
       }),
@@ -138,6 +138,7 @@ describe('getBestQuote', () => {
 
     expect(result).not.toBeNull();
     expect(result.output).toBe(ONE_ETH * quoteMultiplier);
+    expect(result.gasEstimate).toBe(100000n);
     expect(result.hops).toBe(1);
     expect(result.inIsNative).toBe(true);
     expect(result.outIsNative).toBe(false);
