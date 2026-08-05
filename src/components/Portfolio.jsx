@@ -143,7 +143,7 @@ export default function Portfolio() {
               <div className="balance-name">
                 <TokenIcon
                   token={{ symbol: row.symbol, decimals: row.decimals }}
-                  chainId={chains[0].id}
+                  chainId={Number(Object.keys(row.chains)[0]) || chains[0].id}
                   size={24}
                 />
                 <div>

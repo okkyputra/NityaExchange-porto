@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useChainId } from 'wagmi';
 import { CHAIN_TOKENS } from '../tokens';
 import { getMarketChart, formatUsd, formatPercent } from '../lib/price';
+import TokenIcon from './TokenIcon';
 
 const RANGES = [
   { days: 1, label: '1D' },
@@ -129,6 +130,7 @@ export default function PriceChart() {
 
       {chart && (
         <div className="chart-headline">
+          <TokenIcon token={{ symbol }} chainId={chainId} size={28} />
           <strong className={up ? 'up' : 'down'}>{formatUsd(chart.end)}</strong>
           <span className={up ? 'up' : 'down'}>{formatPercent(change)}</span>
           <span className="panel-sub">
