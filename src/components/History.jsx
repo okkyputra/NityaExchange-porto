@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useAccount } from 'wagmi';
 import { EXPLORER_URLS, UNISWAP } from '../wagmi';
 import { getSwaps, clearHistory } from '../lib/history';
 
@@ -16,7 +15,6 @@ function timeAgo(ts) {
 }
 
 export default function History() {
-  const { address, isConnected } = useAccount();
   const [entries, setEntries] = useState([]);
 
   useEffect(() => {
@@ -24,14 +22,6 @@ export default function History() {
   }, []);
 
   const refresh = () => setEntries(getSwaps());
-
-  if (!isConnected || !address) {
-    return (
-      <div className="panel-card">
-        <p className="panel-empty">Connect a wallet to view your swap history.</p>
-      </div>
-    );
-  }
 
   return (
     <div className="panel-card">
