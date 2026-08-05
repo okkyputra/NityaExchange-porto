@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import SwapCard from './SwapCard';
-import Balances from './Balances';
+import Portfolio from './Portfolio';
 import PriceChart from './PriceChart';
 import History from './History';
+import CrossChain from './CrossChain';
 
 const TABS = [
   { id: 'swap', label: 'Swap' },
-  { id: 'balances', label: 'Balances' },
+  { id: 'portfolio', label: 'Portfolio' },
   { id: 'charts', label: 'Charts' },
+  { id: 'cross', label: 'Cross-chain' },
   { id: 'history', label: 'History' },
 ];
 
@@ -32,8 +34,9 @@ export default function AppShell() {
       </div>
       <div className="app-tab-panel">
         {tab === 'swap' && <SwapCard />}
-        {tab === 'balances' && <Balances />}
+        {tab === 'portfolio' && <Portfolio />}
         {tab === 'charts' && <PriceChart />}
+        {tab === 'cross' && <CrossChain />}
         {tab === 'history' && <History />}
       </div>
     </div>
