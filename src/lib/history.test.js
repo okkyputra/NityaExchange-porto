@@ -48,9 +48,10 @@ describe('swap history (localStorage)', () => {
   });
 
   it('removes a single swap by id', () => {
-    const [a, b] = [addSwap({ txHash: '0xa' }), addSwap({ txHash: '0xb' })];
+    addSwap({ txHash: '0xa' });
+    const latest = addSwap({ txHash: '0xb' })[0];
     expect(getSwaps()).toHaveLength(2);
-    removeSwap(b[0].id);
+    removeSwap(latest.id);
     const swaps = getSwaps();
     expect(swaps).toHaveLength(1);
     expect(swaps[0].txHash).toBe('0xb');

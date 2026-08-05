@@ -45,19 +45,17 @@ export default function Balances() {
       const prices = await getPrices(tokens.map((t) => t.symbol));
       const withUsd = balanceResults
         .map(({ token, value }) => {
-          const amount = Number(formatUnits(value, token.decimals));
           const price = prices[token.symbol];
           return {
             token,
             value,
-            amount,
             price: price ?? null,
-            usd: price != null ? amount * price : null,
+            usd: price != null ? Number(formatUnits(value, token.decimals)) * price : null,
           };
         })
         .sort((a, b) => (b.usd ?? -1) - (a.usd ?? -1));
       setRows(withUsd);
-    } catch (err) {
+    } catch {
       setError('Could not load balances right now');
     } finally {
       setLoading(false);
