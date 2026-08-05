@@ -33,8 +33,8 @@ describe('PriceChart', () => {
     render(<PriceChart />);
     await waitFor(() => expect(document.querySelector('.chart-svg')).not.toBeNull());
     const callsBefore = chartMock.getMarketChart.mock.calls.length;
-    const sevenDay = screen.getByRole('button', { name: '7D' });
-    fireEvent.click(sevenDay);
+    const range = screen.getByRole('button', { name: '30D' });
+    fireEvent.click(range);
     await waitFor(() =>
       expect(chartMock.getMarketChart.mock.calls.length).toBeGreaterThan(callsBefore),
     );
