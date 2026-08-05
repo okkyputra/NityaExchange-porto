@@ -488,10 +488,53 @@ h1 {
   gap: 0.1rem;
 }
 
+.balance-name {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.balance-name div {
+  display: grid;
+  gap: 0.1rem;
+}
+
 .balance-name span,
 .balance-amount span {
   color: var(--muted);
   font-size: 0.78rem;
+}
+
+.token-icon {
+  border-radius: 50%;
+  object-fit: cover;
+  flex: none;
+}
+
+.token-icon-fallback {
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #07111f;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+
+.token-select-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--panel-strong);
+  border: 1px solid var(--border);
+  border-radius: 0.7rem;
+  padding: 0.4rem 0.6rem;
+}
+
+.token-select-wrap .token-select {
+  border: none;
+  background: transparent;
+  padding: 0;
 }
 
 .balance-usd {
@@ -532,7 +575,7 @@ h1 {
 
 .chart-headline {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 0.7rem;
   flex-wrap: wrap;
 }
