@@ -92,7 +92,7 @@ export async function quoteExactInput(client, quoter, path, amountIn) {
     functionName: 'quoteExactInput',
     args: [path, amountIn],
   });
-  return result[0];
+  return { output: result[0], gasEstimate: result[3] ?? 0n };
 }
 
 export function applySlippage(amountOut, slippageBps) {
