@@ -458,10 +458,18 @@ export default function CrossChain() {
             </button>
           ) : route.legOut ? (
             <div className="xc-dest">
-              <p className="panel-sub">
-                Bridge in transit (~{route.estimatedFillTimeSec}s). Swap on{' '}
-                {UNISWAP[toChainId].name} when it lands.
-              </p>
+              {bridgeLanded ? (
+                <p className="panel-sub">
+                  Bridge landed — received{' '}
+                  {formatTokenAmount(bridgeLandedAmount, route.bridgeAsset.to.decimals)}{' '}
+                  {route.bridgeAsset.to.symbol} on {UNISWAP[toChainId].name}.
+                </p>
+              ) : (
+                <p className="panel-sub">
+                  Bridge in transit (~{route.estimatedFillTimeSec}s). Monitoring{' '}
+                  {UNISWAP[toChainId].name} for your {route.bridgeAsset.to.symbol}…
+                </p>
+              )}
               <button
                 type="button"
                 className="btn btn-primary"
