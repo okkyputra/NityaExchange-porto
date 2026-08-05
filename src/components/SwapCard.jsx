@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { encodeFunctionData, maxUint256, parseUnits } from 'viem';
+import { encodeFunctionData, formatEther, maxUint256, parseUnits } from 'viem';
 import { useAccount, useChainId, useSwitchChain } from 'wagmi';
 import {
   getBalance,
