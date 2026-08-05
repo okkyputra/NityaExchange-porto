@@ -62,12 +62,18 @@ export async function planCrossChain({
     return { error: 'Could not quote the bridge leg' };
   }
   const bridgeOut = bridge.outputAmount;
+  const bridgeOutToken = {
+    address: bridge.outputToken.address,
+    symbol: bridge.outputToken.symbol,
+    name: bridge.outputToken.symbol,
+    decimals: bridge.outputToken.decimals,
+  };
 
   let legOut = null;
   let finalOut = bridgeOut;
-  if (toToken.symbol !== chosen.symbol) {
-    const quote = await getBestQuote(publicClientTo, toChainId, toAsset, toToken, bridgeOut);
-    if (!quote) return { error: `No swap route ${chosen.symbol} → ${toToken.symbol}` };
+  if (toToken.address !== bridgeOutToken.address) {
+    const quote = await getBestQuote(publicClientTo, toChainId, bridgeOutToken, toToken, bridgeOut);
+    if (!quote) return { error: `No swap route ${bridgeOutToken.symbol} → ${toToken.symbol}` };
     legOut = quote;
     finalOut = quote.output;
   }
@@ -79,7 +85,7 @@ export async function planCrossChain({
     fromToken,
     toToken,
     amountIn,
-    bridgeAsset: { from: fromAsset, to: toAsset },
+    bridgeAsset: { from: fromAsset, to: bridgeOutToken },
     legIn,
     bridge,
     legOut,
