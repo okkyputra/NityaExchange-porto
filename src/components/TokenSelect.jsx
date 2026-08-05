@@ -5,6 +5,7 @@ import { config } from '../wagmi';
 import { erc20Abi } from '../abi';
 import { CHAIN_TOKENS } from '../tokens';
 import { formatTokenAmount, isNative } from '../lib/swap';
+import TokenIcon from './TokenIcon';
 
 function formatBalance(value, decimals) {
   const formatted = formatTokenAmount(value, decimals, 4);
@@ -53,26 +54,30 @@ export default function TokenSelect({ chainId, value, onChange, refreshKey = 0 }
   }, [address, chainId, tokens, isConnected, refreshKey]);
 
   const showBalance = isConnected && address;
+  const selectedToken = tokens.find((t) => t.symbol === value);
 
   return (
-    <select
-      className="token-select"
-      value={value}
-      onChange={(event) => onChange(event.target.value)}
-      aria-label="Select token"
-    >
-      {tokens.map((token) => {
-        const balance = showBalance ? balances[token.symbol] : null;
-        const label =
-          balance != null
-            ? `${token.symbol} · ${formatBalance(balance, token.decimals)}`
-            : `${token.symbol} · ${token.name}`;
-        return (
-          <option key={token.symbol} value={token.symbol}>
-            {label}
-          </option>
-        );
-      })}
-    </select>
+    <span className="token-select-wrap">
+      {selectedToken && <TokenIcon token={selectedToken} chainId={chainId} size={20} />}
+      <select
+        className="token-select"
+        value={value}
+        onChange={(event) => onChange(event.target.value)}
+        aria-label="Select token"
+      >
+        {tokens.map((token) => {
+          const balance = showBalance ? balances[token.symbol] : null;
+          const label =
+            balance != null
+              ? `${token.symbol} · ${formatBalance(balance, token.decimals)}`
+              : `${token.symbol} · ${token.name}`;
+          return (
+            <option key={token.symbol} value={token.symbol}>
+              {label}
+            </option>
+          );
+        })}
+      </select>
+    </span>
   );
 }

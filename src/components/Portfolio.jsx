@@ -6,6 +6,7 @@ import { CHAIN_TOKENS } from '../tokens';
 import { erc20Abi } from '../abi';
 import { getPrices, formatUsd, formatCompactUsd } from '../lib/price';
 import { isNative, formatTokenAmount } from '../lib/swap';
+import TokenIcon from './TokenIcon';
 
 export default function Portfolio() {
   const { address, isConnected } = useAccount();
@@ -140,8 +141,15 @@ export default function Portfolio() {
           return (
             <div className="portfolio-row" key={row.symbol}>
               <div className="balance-name">
-                <strong>{row.symbol}</strong>
-                <span>{row.name}</span>
+                <TokenIcon
+                  token={{ symbol: row.symbol, decimals: row.decimals }}
+                  chainId={chains[0].id}
+                  size={24}
+                />
+                <div>
+                  <strong>{row.symbol}</strong>
+                  <span>{row.name}</span>
+                </div>
               </div>
               <div className="portfolio-chains">
                 {chains.map((chain) => (
