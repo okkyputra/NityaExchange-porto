@@ -25,7 +25,8 @@ export default function App() {
             <h1>Real token swaps, on-chain, from a clean interface.</h1>
             <p className="lead">
               This portfolio kicks off with a production-style swap app powered by Uniswap V3
-              routing. Connect a wallet and trade ETH, USDC, and more on Base or Arbitrum.
+              routing. Connect a wallet and trade ETH, USDC, and more on Base or Arbitrum — or route
+              a swap across chains over the Across bridge.
             </p>
             <div className="hero-actions">
               <a className="btn btn-primary" href="#swap">
@@ -46,7 +47,7 @@ export default function App() {
             </div>
             <div className="metric-card">
               <span>Routing engine</span>
-              <strong>Uniswap V3</strong>
+              <strong>Uniswap V3 + Across</strong>
             </div>
             <div className="metric-card">
               <span>Next milestone</span>
@@ -110,7 +111,7 @@ export default function App() {
               view. ✓
             </li>
             <li>
-              <strong>Phase 3</strong> — Portfolio tracking and cross-chain swap routing.
+              <strong>Phase 3</strong> — Portfolio tracking and cross-chain swap routing. ✓
             </li>
           </ol>
         </section>
