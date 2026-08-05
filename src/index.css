@@ -381,6 +381,237 @@ h1 {
   font-size: 0.9rem;
 }
 
+.app-shell {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.app-tabs {
+  display: flex;
+  gap: 0.35rem;
+  background: var(--panel-strong);
+  border: 1px solid var(--border);
+  border-radius: 0.9rem;
+  padding: 0.3rem;
+}
+
+.app-tab {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.55rem 0.5rem;
+  border-radius: 0.65rem;
+  cursor: pointer;
+}
+
+.app-tab.active {
+  background: var(--panel);
+  color: var(--text);
+  box-shadow: 0 0 0 1px var(--border);
+}
+
+.app-tab-panel .swap-card {
+  margin-top: 0;
+}
+
+.panel-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 1.2rem;
+  padding: 1.2rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+  display: grid;
+  gap: 1rem;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.panel-header h3 {
+  margin: 0;
+}
+
+.panel-sub {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.panel-total {
+  text-align: right;
+}
+
+.panel-total span {
+  display: block;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+
+.panel-total strong {
+  font-size: 1.3rem;
+}
+
+.panel-empty {
+  color: var(--muted);
+  text-align: center;
+  padding: 1.5rem 0;
+}
+
+.balance-list,
+.history-list {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.balance-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  align-items: center;
+  gap: 0.8rem;
+  background: var(--panel-strong);
+  border: 1px solid var(--border);
+  border-radius: 0.8rem;
+  padding: 0.7rem 0.9rem;
+}
+
+.balance-name,
+.balance-amount,
+.balance-usd {
+  display: grid;
+  gap: 0.1rem;
+}
+
+.balance-name span,
+.balance-amount span {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.balance-usd {
+  text-align: right;
+}
+
+.chart-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.range-tabs {
+  display: flex;
+  gap: 0.2rem;
+  background: var(--panel-strong);
+  border: 1px solid var(--border);
+  border-radius: 0.7rem;
+  padding: 0.2rem;
+}
+
+.range-tab {
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 0.3rem 0.55rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.range-tab.active {
+  background: var(--panel);
+  color: var(--text);
+}
+
+.chart-headline {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+
+.chart-headline strong {
+  font-size: 1.5rem;
+}
+
+.chart-headline .up,
+.chart-svg .up {
+  color: var(--success);
+}
+
+.chart-headline .down,
+.chart-svg .down {
+  color: var(--danger);
+}
+
+.chart-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.chart-gridline {
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 1;
+}
+
+.chart-label {
+  fill: var(--muted);
+  font-size: 11px;
+}
+
+.history-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  background: var(--panel-strong);
+  border: 1px solid var(--border);
+  border-radius: 0.8rem;
+  padding: 0.7rem 0.9rem;
+}
+
+.history-main {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.history-main span {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.history-side {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.badge-ok {
+  color: var(--success);
+  background: rgba(74, 222, 128, 0.12);
+}
+
+.history-link {
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
 @media (max-width: 860px) {
   .hero,
   .swap-shell,
