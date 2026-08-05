@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { formatUnits } from 'viem';
 import { useAccount, usePublicClient } from 'wagmi';
 import { chains, UNISWAP } from '../wagmi';
@@ -9,11 +9,14 @@ import { isNative, formatTokenAmount } from '../lib/swap';
 
 export default function Portfolio() {
   const { address, isConnected } = useAccount();
-  const publicClients = {};
-  for (const chain of chains) {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    publicClients[chain.id] = usePublicClient({ chainId: chain.id });
-  }
+  const firstChainId = chains[0].id;
+  const secondChainId = chains[1].id;
+  const clientFirst = usePublicClient({ chainId: firstChainId });
+  const clientSecond = usePublicClient({ chainId: secondChainId });
+  const publicClients = useMemo(
+    () => ({ [firstChainId]: clientFirst, [secondChainId]: clientSecond }),
+    [firstChainId, secondChainId, clientFirst, clientSecond],
+  );
   const [rows, setRows] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
