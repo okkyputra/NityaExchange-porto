@@ -1,5 +1,5 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import SwapCard from './components/SwapCard';
+import AppShell from './components/AppShell';
 
 export default function App() {
   return (
@@ -50,7 +50,7 @@ export default function App() {
             </div>
             <div className="metric-card">
               <span>Next milestone</span>
-              <strong>Portfolio tracker</strong>
+              <strong>Live now</strong>
             </div>
           </div>
         </section>
@@ -89,12 +89,12 @@ export default function App() {
               <h2>Swap app</h2>
               <p>
                 Pick a network, choose your tokens, and preview a live on-chain quote. Swaps run on
-                Base and Arbitrum mainnet through Uniswap V3 pools. A small test amount is all it
-                takes to try the full flow.
+                Base and Arbitrum mainnet through Uniswap V3 pools. Track your balances, watch price
+                charts, and review your swap history — all in one place.
               </p>
             </div>
 
-            <SwapCard />
+            <AppShell />
           </div>
         </section>
 
@@ -103,11 +103,11 @@ export default function App() {
           <ol className="roadmap-list">
             <li>
               <strong>Phase 1</strong> — Live swap app: wallet connect, routing, approvals, and
-              on-chain execution on Base + Arbitrum.
+              on-chain execution on Base + Arbitrum. ✓
             </li>
             <li>
               <strong>Phase 2</strong> — Token balances, price charts, and a transaction history
-              view.
+              view. ✓
             </li>
             <li>
               <strong>Phase 3</strong> — Portfolio tracking and cross-chain swap routing.
