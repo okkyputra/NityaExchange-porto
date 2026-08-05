@@ -47,6 +47,7 @@ export default function SwapCard() {
   const [slippageBps, setSlippageBps] = useState(50);
 
   const [balanceIn, setBalanceIn] = useState(null);
+  const [gasPrice, setGasPrice] = useState(0n);
   const [balanceOut, setBalanceOut] = useState(null);
   const [allowance, setAllowance] = useState(null);
 
