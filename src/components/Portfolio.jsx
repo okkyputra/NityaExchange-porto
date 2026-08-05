@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { formatUnits } from 'viem';
 import { useAccount, usePublicClient } from 'wagmi';
 import { chains, UNISWAP } from '../wagmi';

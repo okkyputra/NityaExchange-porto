@@ -39,7 +39,7 @@ export async function planCrossChain({
   }
   if (!chosen) return { error: 'No bridge route for this pair' };
 
-  const { fromAsset, toAsset } = chosen;
+  const { fromAsset } = chosen;
 
   let legIn = null;
   let bridgeIn = amountIn;
