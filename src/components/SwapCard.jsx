@@ -21,6 +21,7 @@ import {
   isNative,
 } from '../lib/swap';
 import TokenSelect from './TokenSelect';
+import { addSwap } from '../lib/history';
 
 const SLIPPAGE_OPTIONS = [
   { label: '0.1%', bps: 10 },
@@ -316,6 +317,15 @@ export default function SwapCard() {
       setSwapHash(hash);
       await waitForTransactionReceipt(config, { hash });
       setStep('success');
+      addSwap({
+        chainId,
+        txHash: hash,
+        fromSymbol: fromToken.symbol,
+        toSymbol: toToken.symbol,
+        amountIn: formatTokenAmount(amountIn, fromToken.decimals),
+        amountOut: formatTokenAmount(quoteOut, toToken.decimals),
+        timestamp: Date.now(),
+      });
       setTxCount((count) => count + 1);
     } catch (error) {
       setStep('error');
