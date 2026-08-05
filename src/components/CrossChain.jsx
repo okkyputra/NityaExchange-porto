@@ -13,7 +13,7 @@ function getErrorText(error) {
 }
 
 export default function CrossChain() {
-  const { address, isConnected } = useAccount();
+  const { address } = useAccount();
   const chainId = useChainId();
   const { switchChain } = useSwitchChain();
   const [fromChainId, setFromChainId] = useState(chains[0].id);
@@ -397,15 +397,17 @@ export default function CrossChain() {
               type="button"
               className="btn btn-primary"
               onClick={executeOrigin}
-              disabled={busy}
+              disabled={!address || busy}
             >
-              {busy
-                ? {
-                    swapping: 'Swapping…',
-                    'approving-bridge': 'Approving bridge…',
-                    depositing: 'Depositing…',
-                  }[execStep]
-                : 'Start bridge'}
+              {!address
+                ? 'Connect wallet'
+                : busy
+                  ? {
+                      swapping: 'Swapping…',
+                      'approving-bridge': 'Approving bridge…',
+                      depositing: 'Depositing…',
+                    }[execStep]
+                  : 'Start bridge'}
             </button>
           ) : route.legOut ? (
             <div className="xc-dest">
@@ -417,7 +419,7 @@ export default function CrossChain() {
                 type="button"
                 className="btn btn-primary"
                 onClick={executeDestination}
-                disabled={busy}
+                disabled={!address || busy}
               >
                 {execStep === 'done' ? 'Done' : `Swap on ${UNISWAP[toChainId].name}`}
               </button>
