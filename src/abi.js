@@ -58,8 +58,16 @@ export const quoterV2Abi = [
     name: 'quoteExactInput',
     outputs: [
       { internalType: 'uint256', name: 'amountOut', type: 'uint256' },
-      { internalType: 'uint160', name: 'sqrtPriceX96After', type: 'uint160' },
-      { internalType: 'uint32', name: 'initializedTicksCrossed', type: 'uint32' },
+      {
+        internalType: 'uint160[]',
+        name: 'sqrtPriceX96AfterList',
+        type: 'uint160[]',
+      },
+      {
+        internalType: 'uint32[]',
+        name: 'initializedTicksCrossedList',
+        type: 'uint32[]',
+      },
       { internalType: 'uint256', name: 'gasEstimate', type: 'uint256' },
     ],
     stateMutability: 'nonpayable',
@@ -74,7 +82,6 @@ export const swapRouterAbi = [
         components: [
           { internalType: 'bytes', name: 'path', type: 'bytes' },
           { internalType: 'address', name: 'recipient', type: 'address' },
-          { internalType: 'uint256', name: 'deadline', type: 'uint256' },
           { internalType: 'uint256', name: 'amountIn', type: 'uint256' },
           { internalType: 'uint256', name: 'amountOutMinimum', type: 'uint256' },
         ],
@@ -90,27 +97,29 @@ export const swapRouterAbi = [
   },
   {
     inputs: [
-      { internalType: 'uint256', name: 'amountOutMin', type: 'uint256' },
-      { internalType: 'address[]', name: 'path', type: 'address[]' },
-      { internalType: 'address', name: 'to', type: 'address' },
       { internalType: 'uint256', name: 'deadline', type: 'uint256' },
+      { internalType: 'bytes[]', name: 'data', type: 'bytes[]' },
     ],
-    name: 'swapExactETHForTokens',
-    outputs: [{ internalType: 'uint256[]', name: 'amounts', type: 'uint256[]' }],
+    name: 'multicall',
+    outputs: [{ internalType: 'bytes[]', name: 'results', type: 'bytes[]' }],
     stateMutability: 'payable',
     type: 'function',
   },
   {
     inputs: [
-      { internalType: 'uint256', name: 'amountIn', type: 'uint256' },
-      { internalType: 'uint256', name: 'amountOutMin', type: 'uint256' },
-      { internalType: 'address[]', name: 'path', type: 'address[]' },
-      { internalType: 'address', name: 'to', type: 'address' },
-      { internalType: 'uint256', name: 'deadline', type: 'uint256' },
+      { internalType: 'uint256', name: 'amountMinimum', type: 'uint256' },
+      { internalType: 'address', name: 'recipient', type: 'address' },
     ],
-    name: 'swapExactTokensForETH',
-    outputs: [{ internalType: 'uint256[]', name: 'amounts', type: 'uint256[]' }],
+    name: 'unwrapWETH9',
+    outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'WETH9',
+    outputs: [{ internalType: 'address', name: '', type: 'address' }],
+    stateMutability: 'view',
     type: 'function',
   },
 ];

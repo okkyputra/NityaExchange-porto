@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { maxUint256, parseUnits } from 'viem';
+import { encodeFunctionData, maxUint256, parseUnits } from 'viem';
 import { useAccount, useChainId, useSwitchChain } from 'wagmi';
 import {
   getBalance,
@@ -255,7 +255,6 @@ export default function SwapCard() {
 
   const handleSwap = async () => {
     if (!address || !route || !quoteOut || !fromToken) return;
-    const router = UNISWAP[chainId].swapRouter;
     const amountOutMin = applySlippage(quoteOut, slippageBps);
     try {
       if (needsApproval) {
@@ -272,36 +271,43 @@ export default function SwapCard() {
       }
 
       setStep('swapping');
-      const base = { chainId, address: router, abi: swapRouterAbi };
-      let hash;
-      if (route.inIsNative) {
-        hash = await writeContract(config, {
-          ...base,
-          functionName: 'swapExactETHForTokens',
-          args: [amountOutMin, route.addresses, address, deadlineFromNow()],
-          value: amountIn,
-        });
-      } else if (route.outIsNative) {
-        hash = await writeContract(config, {
-          ...base,
-          functionName: 'swapExactTokensForETH',
-          args: [amountIn, amountOutMin, route.addresses, address, deadlineFromNow()],
-        });
-      } else {
-        hash = await writeContract(config, {
-          ...base,
+      const router = UNISWAP[chainId].swapRouter;
+      const deadline = deadlineFromNow();
+      const swapData = [
+        encodeFunctionData({
+          abi: swapRouterAbi,
           functionName: 'exactInput',
           args: [
             {
               path: route.feePath,
-              recipient: address,
-              deadline: deadlineFromNow(),
+              recipient: route.outIsNative ? router : address,
               amountIn,
               amountOutMinimum: amountOutMin,
             },
           ],
-        });
+        }),
+      ];
+      let value = 0n;
+      if (route.outIsNative) {
+        swapData.push(
+          encodeFunctionData({
+            abi: swapRouterAbi,
+            functionName: 'unwrapWETH9',
+            args: [amountOutMin, address],
+          }),
+        );
+      } else if (route.inIsNative) {
+        value = amountIn;
       }
+
+      const hash = await writeContract(config, {
+        chainId,
+        address: router,
+        abi: swapRouterAbi,
+        functionName: 'multicall',
+        args: [deadline, swapData],
+        value,
+      });
       setSwapHash(hash);
       await waitForTransactionReceipt(config, { hash });
       setStep('success');
