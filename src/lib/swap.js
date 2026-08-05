@@ -57,12 +57,14 @@ export async function getBestQuote(client, chainId, tokenIn, tokenOut, amountIn)
   for (const candidate of candidates) {
     try {
       const feePath = buildFeePath(candidate.addresses, candidate.fees);
-      const output = await quoteExactInput(client, quoterV2, feePath, amountIn);
+      const quote = await quoteExactInput(client, quoterV2, feePath, amountIn);
+      const output = quote.output;
       if (output > 0n && (!best || output > best.output)) {
         best = {
           ...candidate,
           feePath,
           output,
+          gasEstimate: quote.gasEstimate,
           inIsNative: isNative(tokenIn),
           outIsNative: isNative(tokenOut),
         };
