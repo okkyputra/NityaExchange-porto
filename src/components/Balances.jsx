@@ -102,7 +102,7 @@ export default function Balances() {
 
       <div className="balance-list">
         {!loading && rows.length === 0 && <p className="panel-empty">No balances to show.</p>}
-        {rows.map(({ token, value, amount, price, usd }) => (
+        {rows.map(({ token, value, price, usd }) => (
           <div className="balance-row" key={token.symbol}>
             <div className="balance-name">
               <strong>{token.symbol}</strong>

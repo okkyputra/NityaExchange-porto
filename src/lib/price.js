@@ -70,7 +70,7 @@ export async function getMarketChart(symbol, days = 7) {
 
 export function formatUsd(value) {
   if (value == null || Number.isNaN(value)) return '—';
-  if (value >= 1000) return `$${Math.round(value).toLocaleString('en-US')}`;
+  if (value >= 1e6) return `$${Math.round(value).toLocaleString('en-US')}`;
   if (value >= 1) {
     return `$${value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   }

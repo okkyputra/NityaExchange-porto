@@ -83,13 +83,17 @@ describe('getMarketChart', () => {
       'fetch',
       vi.fn().mockResolvedValue({ ok: true, json: async () => ({ prices: [] }) }),
     );
-    await expect(getMarketChart('ETH', 7)).rejects.toThrow();
+    await expect(getMarketChart('ETH', 30)).rejects.toThrow();
   });
 });
 
 describe('formatUsd', () => {
-  it('formats large values without decimals', () => {
-    expect(formatUsd(64174)).toBe('$64,174');
+  it('formats large values with two decimals', () => {
+    expect(formatUsd(64174)).toBe('$64,174.00');
+  });
+
+  it('formats very large values without decimals', () => {
+    expect(formatUsd(2500000)).toBe('$2,500,000');
   });
 
   it('formats typical prices with two decimals', () => {
