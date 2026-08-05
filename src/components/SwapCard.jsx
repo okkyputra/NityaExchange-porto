@@ -232,7 +232,12 @@ export default function SwapCard() {
   }, [chainId, fromToken, toToken, amountIn]);
 
   const needsApproval = Boolean(
-    address && fromToken && !isNative(fromToken) && allowance != null && amountIn && allowance < amountIn,
+    address &&
+    fromToken &&
+    !isNative(fromToken) &&
+    allowance != null &&
+    amountIn &&
+    allowance < amountIn,
   );
   const insufficientBalance = Boolean(
     address && fromToken && amountIn && balanceIn != null && amountIn > balanceIn,
@@ -383,7 +388,12 @@ export default function SwapCard() {
             value={amount}
             onChange={(event) => setAmount(event.target.value)}
           />
-          <TokenSelect chainId={chainId} value={fromSymbol} onChange={handleFromChange} refreshKey={txCount} />
+          <TokenSelect
+            chainId={chainId}
+            value={fromSymbol}
+            onChange={handleFromChange}
+            refreshKey={txCount}
+          />
         </div>
         <div className="token-meta">
           {address && balanceIn != null && fromToken ? (
@@ -413,7 +423,12 @@ export default function SwapCard() {
         <label>You receive</label>
         <div className="token-input-line">
           <input type="text" readOnly placeholder="0.0" value={outputText ?? ''} />
-          <TokenSelect chainId={chainId} value={toSymbol} onChange={handleToChange} refreshKey={txCount} />
+          <TokenSelect
+            chainId={chainId}
+            value={toSymbol}
+            onChange={handleToChange}
+            refreshKey={txCount}
+          />
         </div>
         <div className="token-meta">
           {address && balanceOut != null && toToken ? (
@@ -437,9 +452,7 @@ export default function SwapCard() {
         </div>
         <div className="quote-row">
           <span>Expected output</span>
-          <strong>
-            {outputText ? `${outputText} ${toToken?.symbol}` : '—'}
-          </strong>
+          <strong>{outputText ? `${outputText} ${toToken?.symbol}` : '—'}</strong>
         </div>
         <div className="quote-row">
           <span>Minimum received</span>

@@ -32,10 +32,7 @@ async function buildCandidates(client, factory, tokenA, tokenB, weth) {
       if (pool) candidates.push({ addresses: [tokenA, tokenB], fees: [fee], hops: 1 });
     }
   }
-  if (
-    tokenA.toLowerCase() !== weth.toLowerCase() &&
-    tokenB.toLowerCase() !== weth.toLowerCase()
-  ) {
+  if (tokenA.toLowerCase() !== weth.toLowerCase() && tokenB.toLowerCase() !== weth.toLowerCase()) {
     for (const fee of FEE_TIERS) {
       const [poolA, poolB] = await Promise.all([
         findPool(client, factory, tokenA, weth, fee),
@@ -80,10 +77,7 @@ export async function getBestQuote(client, chainId, tokenIn, tokenOut, amountIn)
 
 export function buildFeePath(addresses, fees) {
   if (addresses.length === 2) {
-    return encodePacked(
-      ['address', 'uint24', 'address'],
-      [addresses[0], fees[0], addresses[1]],
-    );
+    return encodePacked(['address', 'uint24', 'address'], [addresses[0], fees[0], addresses[1]]);
   }
   return encodePacked(
     ['address', 'uint24', 'address', 'uint24', 'address'],

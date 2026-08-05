@@ -40,16 +40,64 @@ function schedule(file) {
   timer = setTimeout(commit, DEBOUNCE_MS);
 }
 
+const PRETTIER = 'node_modules/.bin/prettier';
+const SHFMT = process.env.SHFMT_PATH || '/tmp/opencode/shfmt';
+const BLACK = process.env.BLACK_PATH || '/home/okkyparantika/.local/bin/black';
+const PRETTIER_EXTS = new Set([
+  '.js',
+  '.jsx',
+  '.mjs',
+  '.json',
+  '.css',
+  '.html',
+  '.yml',
+  '.yaml',
+  '.md',
+]);
+
+function run(cmd, args) {
+  return spawnSync(cmd, args, { cwd: ROOT, encoding: 'utf8' });
+}
+
+function beautify(changed) {
+  const prettierFiles = [];
+  const shFiles = [];
+  const pyFiles = [];
+  for (const f of changed) {
+    const ext = f.slice(f.lastIndexOf('.')).toLowerCase();
+    if (PRETTIER_EXTS.has(ext)) prettierFiles.push(f);
+    else if (ext === '.sh') shFiles.push(f);
+    else if (ext === '.py') pyFiles.push(f);
+  }
+  if (prettierFiles.length) {
+    const r = run(PRETTIER, ['--write', ...prettierFiles]);
+    if (r.status !== 0) log(`prettier: ${(r.stderr || r.stdout).slice(0, 500)}`);
+  }
+  if (shFiles.length) {
+    const r = run(SHFMT, ['-i', '2', '-w', ...shFiles]);
+    if (r.status !== 0) log(`shfmt: ${(r.stderr || r.stdout).slice(0, 500)}`);
+  }
+  if (pyFiles.length) {
+    const r = run(BLACK, ['--quiet', ...pyFiles]);
+    if (r.status !== 0) log(`black: ${(r.stderr || r.stdout).slice(0, 500)}`);
+  }
+}
+
 function commit() {
   const changed = [...pending];
   pending.clear();
   if (!changed.length) return;
 
-  const status = spawnSync('git', ['status', '--porcelain'], { cwd: ROOT, encoding: 'utf8' }).stdout.trim();
+  const status = spawnSync('git', ['status', '--porcelain'], {
+    cwd: ROOT,
+    encoding: 'utf8',
+  }).stdout.trim();
   if (!status) {
     log('nothing to commit');
     return;
   }
+
+  beautify(changed);
 
   const lint = spawnSync('npm', ['run', 'lint', '--silent'], { cwd: ROOT, encoding: 'utf8' });
   if (lint.status !== 0) {

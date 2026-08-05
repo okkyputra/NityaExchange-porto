@@ -2,7 +2,12 @@ import { createConfig, http } from 'wagmi';
 import { fallback } from 'viem';
 import { base, arbitrum } from 'wagmi/chains';
 import { connectorsForWallets } from '@rainbow-me/rainbowkit';
-import { walletConnectWallet, metaMaskWallet, coinbaseWallet, injectedWallet } from '@rainbow-me/rainbowkit/wallets';
+import {
+  walletConnectWallet,
+  metaMaskWallet,
+  coinbaseWallet,
+  injectedWallet,
+} from '@rainbow-me/rainbowkit/wallets';
 
 const projectId = '1e09f811b3be47d44b5e75c43caeae60';
 
@@ -50,9 +55,8 @@ export const config = createConfig({
   chains,
   transports: {
     [base.id]: fallback([http(RPC_URLS[base.id][0]), http(RPC_URLS[base.id][1])], { rank: false }),
-    [arbitrum.id]: fallback(
-      [http(RPC_URLS[arbitrum.id][0]), http(RPC_URLS[arbitrum.id][1])],
-      { rank: false },
-    ),
+    [arbitrum.id]: fallback([http(RPC_URLS[arbitrum.id][0]), http(RPC_URLS[arbitrum.id][1])], {
+      rank: false,
+    }),
   },
 });

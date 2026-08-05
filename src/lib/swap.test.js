@@ -108,10 +108,7 @@ describe('buildFeePath', () => {
   it('encodes a two-hop path (address + fee + address + fee + address)', () => {
     const path = buildFeePath([A, W, B], [500, 500]);
     expect(path).toBe(
-      encodePacked(
-        ['address', 'uint24', 'address', 'uint24', 'address'],
-        [A, 500, W, 500, B],
-      ),
+      encodePacked(['address', 'uint24', 'address', 'uint24', 'address'], [A, 500, W, 500, B]),
     );
   });
 });
