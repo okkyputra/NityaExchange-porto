@@ -105,7 +105,7 @@ function commit() {
     return;
   }
 
-  const add = spawnSync('git', ['add', '-A'], { cwd: ROOT, encoding: 'utf8' });
+  spawnSync('git', ['add', '-A'], { cwd: ROOT, encoding: 'utf8' });
   const files = status
     .split('\n')
     .map((l) => l.slice(3).trim())
