@@ -38,7 +38,7 @@ describe('History', () => {
     render(<History />);
     expect(screen.getByText('0.01 ETH → 18.67 USDC')).toBeInTheDocument();
     expect(screen.getByText('Confirmed')).toBeInTheDocument();
-    expect(screen.getByText('Base')).toBeInTheDocument();
+    expect(screen.getByText(/Base ·/)).toBeInTheDocument();
     const link = screen.getByRole('link', { name: 'View' });
     expect(link.getAttribute('href')).toBe('https://basescan.org/tx/0xabc');
   });
