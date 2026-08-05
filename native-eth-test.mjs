@@ -1,11 +1,4 @@
-import {
-  createPublicClient,
-  createWalletClient,
-  http,
-  encodeFunctionData,
-  parseEther,
-  formatUnits,
-} from 'viem';
+import { createPublicClient, createWalletClient, http, parseEther, formatUnits } from 'viem';
 import { privateKeyToAccount } from 'viem/accounts';
 import { spokePoolAbi } from './src/abi.js';
 
@@ -13,7 +6,6 @@ const RPC = 'http://localhost:8545';
 const KEY = '0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80';
 const DUMMY = '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266';
 const WETH_BASE = '0x4200000000000000000000000000000000000006';
-const WETH_ARB = '0x82aF49447D8a07e3bd95BD0d56f35241523fBab1';
 
 const pub = createPublicClient({ transport: http(RPC) });
 const wallet = createWalletClient({
@@ -28,18 +20,11 @@ const q = await (
     `https://app.across.to/api/suggested-fees?originChainId=8453&destinationChainId=42161&token=${WETH_BASE}&amount=${amount.toString()}`,
   )
 ).json();
-console.log(
-  'quote outputAmount:',
-  formatUnits(BigInt(q.outputAmount), 18),
-  'WETH | spoke:',
-  q.spokePoolAddress.slice(0, 10),
-);
-
-// align fork time
 const block = await pub.getBlock();
-await pub.request({ method: 'anvil_setTime', params: [Number(block.timestamp) + 1] });
+const ts = Number(block.timestamp) + 2;
 
-const data = encodeFunctionData({
+const hash = await wallet.writeContract({
+  address: q.spokePoolAddress,
   abi: spokePoolAbi,
   functionName: 'depositV3',
   args: [
@@ -51,16 +36,21 @@ const data = encodeFunctionData({
     BigInt(q.outputAmount),
     42161,
     q.exclusiveRelayer,
-    Number(block.timestamp) + 1,
+    ts,
     Number(q.fillDeadline),
     Number(q.exclusivityDeadline),
     '0x',
   ],
+  value: amount,
+  gas: 4000000n,
 });
-try {
-  const sim = await pub.call({ account: DUMMY, to: q.spokePoolAddress, value: amount, data });
-  console.log('SIMULATED OK (native ETH msg.value accepted)');
-} catch (e) {
-  console.log('SIMULATE REVERT:', e?.shortMessage || e?.details || '?');
-  process.exit(1);
-}
+const r = await pub.waitForTransactionReceipt({ hash });
+console.log(
+  'depositV3 (native ETH, msg.value) status:',
+  r.status === 'success' ? 'SUCCESS' : 'FAILED',
+  hash.slice(0, 12),
+);
+const deposited = r.logs.find(
+  (l) => l.topics[0] === '0x32ed1a409ef04219e4142fae6c908a5f0e49b4bd51f8ff79d9b9c979a494eb4e',
+);
+console.log('FundsDeposited event:', deposited ? 'EMITTED' : 'not found');
