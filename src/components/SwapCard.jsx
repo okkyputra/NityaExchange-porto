@@ -119,6 +119,23 @@ export default function SwapCard() {
   useEffect(() => {
     let cancelled = false;
     async function load() {
+      try {
+        const client = getPublicClient(config, { chainId });
+        const price = await client.getGasPrice();
+        if (!cancelled) setGasPrice(price);
+      } catch {
+        /* ignore */
+      }
+    }
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, [chainId]);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function load() {
       if (!address || !fromToken || !toToken) {
         setBalanceIn(null);
         setBalanceOut(null);
@@ -215,6 +232,7 @@ export default function SwapCard() {
           feePath: result.feePath,
           inIsNative: result.inIsNative,
           outIsNative: result.outIsNative,
+          gasEstimate: result.gasEstimate,
         });
         setQuoteOut(result.output);
       } catch {
@@ -259,6 +277,10 @@ export default function SwapCard() {
   const routeInfo = route
     ? `${route.hops === 1 ? 'Direct pool' : 'Via WETH'} · ${route.fees.map((f) => `${f / 10000}%`).join(' → ')}`
     : '—';
+
+  const networkFee = route?.gasEstimate && gasPrice ? route.gasEstimate * gasPrice : 0n;
+  const networkFeeText =
+    networkFee > 0n ? `~${formatEther(networkFee)} ${fromToken?.symbol ?? 'ETH'}` : null;
 
   const handleSwap = async () => {
     if (!address || !route || !quoteOut || !fromToken) return;
@@ -469,6 +491,12 @@ export default function SwapCard() {
           <span>Minimum received</span>
           <span>{minOutText ? `${minOutText} ${toToken?.symbol}` : '—'}</span>
         </div>
+        {networkFeeText && (
+          <div className="quote-row">
+            <span>Network fee (est.)</span>
+            <span>{networkFeeText}</span>
+          </div>
+        )}
         <div className="quote-row">
           <span>Slippage</span>
           <span className="slippage-group">
