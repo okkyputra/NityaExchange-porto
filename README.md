@@ -41,6 +41,12 @@ npm run dev
 
 Open http://localhost:5173, connect a wallet, and try a swap or a cross-chain route on Base / Arbitrum mainnet.
 
+**Live demo:** https://okkyputra.github.io/NityaExchange-porto/
+
+> Note: WalletConnect's QR modal only works on allowed origins (localhost by default). To enable it on
+> the GitHub Pages domain, add `https://okkyputra.github.io` to the project's domain allowlist on
+> [cloud.reown.com](https://cloud.reown.com). MetaMask / Coinbase / injected wallets work on any origin.
+
 ## Scripts
 
 - `npm run dev` — start the dev server
